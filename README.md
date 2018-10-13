@@ -3,4 +3,4 @@ just another repository
 
 ## title
 
-__ more advanced __ 
+there are some *markdown* marks to learn 
