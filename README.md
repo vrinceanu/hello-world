@@ -1,11 +1,6 @@
 # Plasma MDQT Simulation
 
-This document provides instructions for using the combined molecular
-dynamics (MD) and quantum trajectories (QT) code that simulates 1D
-optical molasses of the ions within a non-expanding,
-uniformly-distributed ultracold neutral plasma, as described in
-[1][paper 1] .
-
+This codes combines molecular dynamics (MD) and quantum trajectories (QT) code to simulates optical interaction of ions within a non-expanding, uniform ultracold neutral plasma, as described in [1][paper 1] .
 
 The MD portion of the code evolves each ion’s position and
 velocity due to inter-ion forces derived from the Yukawa one-component
