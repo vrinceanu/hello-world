@@ -1,13 +1,8 @@
-<style>
-   type="text/css">
-  .over {border-top:1 solid black;}
-</style>
 Document all important quadratic equation 
-which would be the same with *a x<sup>2</sup> + b x + c = 0* .
-<span class="over">3</span>
+which would be the same with *a x<sup>2</sup> + b x + c = 0* 
+&omega<sub>pE</sub><sup>-1</sup> = &rad;<span class="over">3</span>
 
 <table><tr><td>
 foo
 </td></tr></table>
 
-- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `#f03c15`
