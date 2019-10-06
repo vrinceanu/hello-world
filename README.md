@@ -1,4 +1,4 @@
-Introduction {#intro}
+Introduction 
 ============
 
 This document provides instructions for using the combined molecular
@@ -33,4 +33,4 @@ instructions for using our MATLAB analysis code that produces all plots
 found in @glk2019. Finally, Sec.[continue simulation] discusses how to
 continue a simulation from previously-saved conditions.
 
-
+[introduction](#introduction)
