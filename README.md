@@ -5,4 +5,6 @@ where *&omega;<sup>pi</sup> = (n e<sup>2</sup>/&epsilon;<sub>0</sub> m)<sup>&fra
 <table><tr><td>
 foo
 </td></tr></table>
+  
+&radic;<span style="text-decoration: overline">3</span>
 
