@@ -6,5 +6,5 @@ where *&omega;<sup>pi</sup> = (n e<sup>2</sup>/&epsilon;<sub>0</sub> m)<sup>&fra
 foo
 </td></tr></table>
   
-&radic;<span style="text-decoration: overline"><sub>3</sub></span>
+&radic;<span style="text-decoration: overline">32</span>
 
