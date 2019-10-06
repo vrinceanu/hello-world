@@ -10,3 +10,4 @@ which would be the same with *a x<sup>2</sup> + b x + c = 0* .
 foo
 </td></tr></table>
 
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `#f03c15`
