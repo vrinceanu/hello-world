@@ -5,9 +5,5 @@ just another repository
 
 there are some *markdown* marks to learn 
 
-more things to learn from this
-
-```math
-a^2+b^2=c^2
-```
+more things to learn from this $$a^2 + b^2 = c^2$$
 
