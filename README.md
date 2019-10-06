@@ -1,1 +1,5 @@
-<img src="/tex/63419bf2cd5a296a3b16c87c5d732dd1.svg?invert_in_darkmode&sanitize=true" align=middle width=130.27239555pt height=33.20539200000001pt/>
+Document all important quadratic equation <img src="/tex/fe65dba13d61519c403d6d61badf4da7.svg?invert_in_darkmode&sanitize=true" align=middle width=119.34141284999998pt height=26.76175259999998pt/>
+
+\[
+x_{1,2} = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\]
