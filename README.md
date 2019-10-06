@@ -27,7 +27,7 @@ $ ./runFile 1
 
 If you wish to know more in detail what git is and what you can do with it, the [github help page](https://help.github.com/articles/set-up-git) has all the references needed.
 
-The executable *runFile* accepts an integer 'job number' argument, which provides a straightforward way for submitting multiple instances of the code at once. Each time the program is run with a different job number, the output files will be saved within a folder named '*jobX*',where X is the integer provided as argument. The formats of input parameters and output files are detailed in the sections that follow.
+The executable *runFile* accepts an integer 'job number' argument (1 in the above example), which provides a straightforward way for submitting multiple instances of the code at once. Each time the program is run with a different job number, the output files will be saved within a folder named '*jobX*',where X is the integer provided as argument. The formats of input parameters and output files are detailed in the sections that follow.
 
 ## Analyzing the Output Files
 
@@ -39,7 +39,21 @@ To run the program, open ‘mainSimAnalysis.m’ in MATLAB and ensure that the f
 
 ## Input Parameters
 
+All input parameters are grouped into a clearly-labeled section within the first 100 lines of the MDQT code, are defined below.
 
+-   __saveDirectory__ *(string)*: The folder in which simulation data will be saved, relative to the path of the executable file. 
+
+-   __newRun__ *(boolean)*: Tells the program whether to run a new simulation from random initial positions and zero velocity (true) or whether to continue a simulation from previously-saved conditions (false). See Sec.[Continuing a Simulation][#continuing-a-simulation] for more details.
+
+-   __c0Cont__ *(integer)*: Only used when loading previously-saved conditions (newRun = false). **c0Cont** is a 6-digit integer that corresponds to the number of MD time steps undergone in the loaded simulation, and should match the 6-digit integer found in the previously-saved files (e.g. there is an output file with name ‘ions\_timestepxxxxxx.dat’). c0Cont should be set equal to xxxxxx. See Sec. [Continuing a Simulation][#continuing-a-simulation] for more details.
+
+
+## Continuning a Simulation
+
+Due to the MDQT code being computationally expensive, you may run into a situation where the simulation will need to run longer than the time you’re allotted in a single session. For example, some clusters may only allow you to run a simulation for 8 hours at a time, but in order to reach the desired tmax it will take 10 hours. At the end of a simulation we record the ion positions, velocities, and wavefunctions. The code has the ability to continue a simulation by loading these previously-saved conditions.
+It’s important that the program finishes running without interruption because the last line of the code saves the particle conditions. If the program is terminated early, the particle conditions will not be saved and you will not be able to continue the simulation. How long the simulation takes depends on the system it’s run on, the number of particles, the density, and tmax. To obtain an estimate of how long the program will take to run, run a simulation with ∼3500 particles, density = 2, and tmax < 1, which should take less than an hour.
+Assuming you have successfully completed a simulation, you may continue the simulation from the previously-saved conditions in the following way. First, except for ‘newRun’, ‘c0Cont’, and ‘tmax’, all the input parameters must be the same as they were for the original simulation. Then, set newRun = false and set c0Cont equal to the 6-digit integer found within the most recent ‘condi- tions timestepXXXXXX.dat’ file. Finally, remember that tmax is not the duration of the simulation, it is the time at which the simulation ends. You must change tmax to be greater than it was in the previous simulation, otherwise the continued simulation will end immediately.
+Once the input parameters have been changed appropriately, save and recompile the C++ pro- gram following the instructions from Sec.3. Make sure that the new executable file is contained within the same directory as the original executable file because the save directory is relative to the its location.
 
 
 ## References
