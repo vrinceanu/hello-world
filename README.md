@@ -43,7 +43,7 @@ All input parameters are grouped into a clearly-labeled section within the first
 
 -   __saveDirectory__ *(string)*: The folder in which simulation data will be saved, relative to the path of the executable file. 
 
--   __newRun__ *(boolean)*: Tells the program whether to run a new simulation from random initial positions and zero velocity (true) or whether to continue a simulation from previously-saved conditions (false). See Sec.[Continuing a Simulation][#continuing-a-simulation] for more details.
+-   __newRun__ *(boolean)*: Tells the program whether to run a new simulation from random initial positions and zero velocity (true) or whether to continue a simulation from previously-saved conditions (false). See Sec. [Continuing a Simulation][#continuing-a-simulation] for more details.
 
 -   __c0Cont__ *(integer)*: Only used when loading previously-saved conditions (newRun = false). **c0Cont** is a 6-digit integer that corresponds to the number of MD time steps undergone in the loaded simulation, and should match the 6-digit integer found in the previously-saved files (e.g. there is an output file with name ‘ions\_timestepxxxxxx.dat’). c0Cont should be set equal to xxxxxx. See Sec. [Continuing a Simulation][#continuing-a-simulation] for more details.
 
