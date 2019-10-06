@@ -5,5 +5,5 @@ just another repository
 
 there are some *markdown* marks to learn 
 
-more things to learn from this $$a^2 + b^2 = c^2$$
+more things to learn from this a<sup>2</sup> + b<sup>2</sup> = c<sup>2</sup>
 
