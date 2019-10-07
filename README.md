@@ -81,7 +81,7 @@ _&gamma; = 1.41&times;10<sup>8</sup> s<sup>-1</sup>_ is the natural linewidth of
 
 -  __fracOfSig__ *(double)*: Dimensionless parameter between 0 and 1 used for simulating laser cooling of plasmas in a moving frame, in some ways mimicking laser cooling of an expanding plasma. Although this does not account for the changes in $n$ and *T<sub>e</sub>* as a result of plasma expansion, it does provide information about how the cooling efficacy is affected by a plasma with a non-zero mean velocity, which Doppler-shifts ions with respect to the cooling/repump lasers. When *fracOfSig &gt; 0*, we Doppler-shift the cooling/repump lasers by the expected expansion velocity for a plasma of size **sig0** at a distance **fracOfSig** &times; **sig0** from the plasma’s center.
 
-- __sig0__ *(double)*: Initial RMS plasma radius in units of mm. This is only used if *fracOfSig &ne& 0*. Note that **sig0** does not represent the actual size of the plasma in the simulation, which is alway uniformly-distributed. **sig0** is only used to determine the hypothetical hydrodynamic expansion velocity of a plasma with initial size **sig0**.
+- __sig0__ *(double)*: Initial RMS plasma radius in units of mm. This is only used if *fracOfSig &ne; 0*. Note that **sig0** does not represent the actual size of the plasma in the simulation, which is alway uniformly-distributed. **sig0** is only used to determine the hypothetical hydrodynamic expansion velocity of a plasma with initial size **sig0**.
 
 -   Time steps
 
@@ -89,16 +89,48 @@ _&gamma; = 1.41&times;10<sup>8</sup> s<sup>-1</sup>_ is the natural linewidth of
 
     -   __DIHTIMESTEP__ *(double)*: Time step for MD algorithm in units of _&omega;<sup>-1</sup><sub>pE</sub>_ that is used from *t = 0* &rightarrow; **tmaxDIH** (see below).
 
-    -   __TIMESTEP__ (double): Time step for MD algorithm in units of  _&omega;<sup>-1</sup><sub>pE</sub>_ used from *t = * **tmaxDIH** &rightarrow; **tmax**.
+    -   __TIMESTEP__ (double): Time step for MD algorithm in units of  _&omega;<sup>-1</sup><sub>pE</sub>_ used from *t* =  **tmaxDIH** &rightarrow; **tmax**.
 
     -  __tmaxDIH__ *(double)*: Time in units of  _&omega;<sup>-1</sup><sub>pE</sub>_ at which we switch from using **DIHTIMESTEP** to **TIMESTEP**. If a single MD time step is desired, either set **DIHTIMESTEP** = **TIMESTEP** or set **tmaxDIH** = 0.
 
+## Output Files
+
+The MDQT code saves important information about the plasma as a function of time. After a certain number of MD steps, the code records global information about the plasma, including the average ion kinetic energy, average potential energy per particle, and ion state populations. At the end of a simulation, particle positions, velocities, and wavefunctions are saved (these are loaded when continuing a simulation). For convenience, we have provided a MATLAB program that can generate the
+plots found in [[2]](#references), which will are discussed in [Analyzing the Output Files](#analyzing-the-output-files).
+
+Before discussing the different save files, it’s first important to understand how the folders are organized. The **saveDirectory** input parameter provides a relative path to where data for a given simulation will be stored. If the executable is located within directory *full/path/to/exec*, then all data will be stored within *full/path/to/exec/saveDirectory*. Within **saveDirectory**, a folder with name **GexxxDensityxx...Ionsxxxx** is saved. From now on, this will be referred to as the **simulation data folder**. Each simulation data folder contains a job folder for each instance of the program that is run. Recall from Sec. [Installation](#installation) that the job number is the integer input parameter that the executable reads in to distinguish multiple runs of the same executable.
+
+A description of each file saved by the MDQT program is discussed below. Each file type is saved within each job folder. We have provided a MATLAB program that processes and plots the data within these files
+(discussed in Sec.[Analyzing the Output Files](#analyzing-the-output-files)). Knowledge of these output files is not required to use the MATLAB program.
+
+Each file below is saved within each job folder:
+
+-   **energies.dat**: Tab-delimited file whose columns contain energy-related information about the plasma as a function of time. Each recorded quantity is averaged over all particles. Time, energy, and velocity are recorded with units _&omega;<sup>-1</sup><sub>pE</sub>_, *E<sub>c</sub> = e<sup>2</sup>/(4&pi;&epsilon;<sub>0</sub> a<sub>ws</sub>), and
+*a<sub>ws</sub> &omega;<sub>pE</sub>* respectively. The columns are organized as [t, KE<sub>x</sub>, KE<sub>y</sub>, KE<sub>z</sub>, PE, PE(t) - PE(0). v<sub>exp,x</sub>], where **KE** denotes kinetic energy, **PE** denotes potential energy, and v<sub>exp,x</sub> denotes mean *x*-velocity.
+
+-   **statePopulationsVsVTimexxxxxx.dat**: Tab-delimited file containing the state populations for each ion as a function of the *x*-velocity (*v<sub>x</sub>*). The columns are organized as follows: 
+[v<sub>x</sub>, P<sub>v</sub>(v<sub>x</sub>), P<sub>p</sub>(v<sub>x</sub>), P<sub>d</sub>(v<sub>x</sub>)]. Each row corresponds to a different ion within the simulation. **xxxxxxx** is a 6-digit integer that corresponds to the row number of the **energies.dat** file, thus representing the time at which the state populations were recorded.
+
+-  **vel_distX_timexxxxxxx.dat**: Contains the velocity distribution along a particular axis (X = x, y, or z) and particular time (xxxxxx corresponds to a row of **energies.dat**). The first column contains v<sub>x</sub> and the second column contains the probability (relative to 1) of having that particular velocity.
+
+-  **wvFns_timexxxxxx.dat**: This file contains the wavefunctions of all particles at the end of the simulation. This is read in when continuing a simulation. Each row corresponds to a different ion and each of the 24 columns correspond to twelve pairs of real/imaginary parts of the wavefunction coefficients. See [[2]](#references) for wavefunction naming convention.
+
+-  **conditions_timestepxxxxxx.dat**: Tab-delimited file created at the end of the simulation that contains particle position and velocity information that is read in by the program when continuing a simulation. Each row corresponds to a different particle. The columns are structured as follows: [x y z v<sub>x</sub> v<sub>y</sub> v<sub>z</sub>]. The positions and velocities are recorded with units of *a<sub>ws</sub>* and *a<sub>ws</sub>&omega;<sub>pE</sub>*, respectively. *xxxxxx* in the file name corresponds to the number of MD time steps undergone within the simulation up until this point.
+
+-  **ions_timestepxxxxxx.dat**: Tab-delimited file created at the end of the simulation that contains the particle number, the number of times the ‘output’ function was called (e.g. the number of MD time steps), and the simulation time the program ended at. It contains a single row with the aforementioned quantities contained in each column in the order of mention.
+
+-  **simParams_timestepxxxxxx.dat**: Tab-delimited file that contains all simulation input parameters used for this simulation. The first column of this file contains variable names and the second column contains the corresponding value used in the program with the same units.
+    
+    
 ## Continuning a Simulation
 
-Due to the MDQT code being computationally expensive, you may run into a situation where the simulation will need to run longer than the time you’re allotted in a single session. For example, some clusters may only allow you to run a simulation for 8 hours at a time, but in order to reach the desired tmax it will take 10 hours. At the end of a simulation we record the ion positions, velocities, and wavefunctions. The code has the ability to continue a simulation by loading these previously-saved conditions.
-It’s important that the program finishes running without interruption because the last line of the code saves the particle conditions. If the program is terminated early, the particle conditions will not be saved and you will not be able to continue the simulation. How long the simulation takes depends on the system it’s run on, the number of particles, the density, and tmax. To obtain an estimate of how long the program will take to run, run a simulation with ∼3500 particles, density = 2, and tmax < 1, which should take less than an hour.
-Assuming you have successfully completed a simulation, you may continue the simulation from the previously-saved conditions in the following way. First, except for ‘newRun’, ‘c0Cont’, and ‘tmax’, all the input parameters must be the same as they were for the original simulation. Then, set newRun = false and set c0Cont equal to the 6-digit integer found within the most recent ‘condi- tions timestepXXXXXX.dat’ file. Finally, remember that tmax is not the duration of the simulation, it is the time at which the simulation ends. You must change tmax to be greater than it was in the previous simulation, otherwise the continued simulation will end immediately.
-Once the input parameters have been changed appropriately, save and recompile the C++ pro- gram following the instructions from Sec.3. Make sure that the new executable file is contained within the same directory as the original executable file because the save directory is relative to the its location.
+Due to the MDQT code being computationally expensive, you may run into a situation where the simulation will need to run longer than the time you’re allotted in a single session. For example, some clusters may only allow you to run a simulation for 8 hours at a time, but in order to reach the desired **tmax** it will take 10 hours. At the end of a simulation we record the ion positions, velocities, and wavefunctions. The code has the ability to continue a simulation by loading these previously-saved conditions.
+
+It’s important that the program finishes running without interruption because the last line of the code saves the particle conditions. If the program is terminated early, the particle conditions will not be saved and you will not be able to continue the simulation. How long the simulation takes depends on the system it’s run on, the number of particles, the density, and **tmax**. To obtain an estimate of how long the program will take to run, run a simulation with &sim; 3500 particles, **density** = 2, and tmax &lt; 1, which should take less than an hour.
+
+Assuming you have successfully completed a simulation, you may continue the simulation from the previously-saved conditions in the following way. First, except for **newRun**, **c0Cont**, and **tmax**, all the input parameters must be the same as they were for the original simulation. Then, set **newRun** = *false* and set **c0Cont** equal to the 6-digit integer found within the most recent **conditions_timestepxxxxxx.dat** file. Finally, remember that **tmax** is not the duration of the simulation, but it is the time at which the simulation ends. You must change **tmax** to be greater than it was in the previous simulation, otherwise the continued simulation will end immediately.
+
+Once the input parameters have been changed appropriately, save and recompile the C++ pro- gram following the instructions from Sec. [Installation](#installation). Make sure that the new executable file is contained within the same directory as the original executable file because the save directory is relative to the its location.
 
 
 ## References
