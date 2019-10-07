@@ -105,8 +105,8 @@ A description of each file saved by the MDQT program is discussed below. Each fi
 
 Each file below is saved within each job folder:
 
--   **energies.dat**: Tab-delimited file whose columns contain energy-related information about the plasma as a function of time. Each recorded quantity is averaged over all particles. Time, energy, and velocity are recorded with units _&omega;<sup>-1</sup><sub>pE</sub>_, *E<sub>c</sub> = e<sup>2</sup>/(4&pi;&epsilon;<sub>0</sub> a<sub>ws</sub>), and
-*a<sub>ws</sub> &omega;<sub>pE</sub>* respectively. The columns are organized as [t, KE<sub>x</sub>, KE<sub>y</sub>, KE<sub>z</sub>, PE, PE(t) - PE(0). v<sub>exp,x</sub>], where **KE** denotes kinetic energy, **PE** denotes potential energy, and v<sub>exp,x</sub> denotes mean *x*-velocity.
+-   **energies.dat**: Tab-delimited file whose columns contain energy-related information about the plasma as a function of time. Each recorded quantity is averaged over all particles. Time, energy, and velocity are recorded with units _&omega;<sup>-1</sup><sub>pE</sub>_, _E<sub>c</sub> = e<sup>2</sup>/(4&pi;&epsilon;<sub>0</sub> a<sub>ws</sub>)_, and
+*a<sub>ws</sub> &omega;<sub>pE</sub>* respectively. The columns are organized as _[t KE<sub>x</sub> KE<sub>y</sub>, KE<sub>z</sub> PE PE(t) - PE(0) v<sub>exp,x</sub>]_, where **KE** denotes kinetic energy, **PE** denotes potential energy, and v<sub>exp,x</sub> denotes mean *x*-velocity.
 
 -   **statePopulationsVsVTimexxxxxx.dat**: Tab-delimited file containing the state populations for each ion as a function of the *x*-velocity (*v<sub>x</sub>*). The columns are organized as follows: 
 [v<sub>x</sub>, P<sub>v</sub>(v<sub>x</sub>), P<sub>p</sub>(v<sub>x</sub>), P<sub>d</sub>(v<sub>x</sub>)]. Each row corresponds to a different ion within the simulation. **xxxxxxx** is a 6-digit integer that corresponds to the row number of the **energies.dat** file, thus representing the time at which the state populations were recorded.
