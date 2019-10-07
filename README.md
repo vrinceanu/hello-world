@@ -6,7 +6,7 @@ The MD portion of the code evolves each ion’s position and velocity due to int
 for the *<sup>2</sup>S<sub>1/2</sub> &rightarrow; <sup>2</sup>P<sub>3/2</sub>* transition and a repump laser
 for the *<sup>2</sup>D<sub>5/2</sub> &rightarrow; <sup>2</sup>P<sub>3/2</sub>* transition.
 
-The conventions, units and assumptions of the code are explained in reference [[1]][#reference]. For simplicity, the MDQT code consist of a single C++ source file (*PlasmaMDQTSimulation.cpp*). Prior to running a simulation, the user must appropriately set the input parameters, which are contained in a clearly-labeled section in the first 100 lines of the MDQT code, and then the code must be compiled into an executable. The code is parallelized using MPI, and for simulations of large systems requires significant computational resources. For best performance we suggest running it on a supercomputer.
+The conventions, units and assumptions of the code are explained in reference [[1]][#references]. For simplicity, the MDQT code consist of a single C++ source file (*PlasmaMDQTSimulation.cpp*). Prior to running a simulation, the user must appropriately set the input parameters, which are contained in a clearly-labeled section in the first 100 lines of the MDQT code, and then the code must be compiled into an executable. The code is parallelized using MPI, and for simulations of large systems requires significant computational resources. For best performance we suggest running it on a supercomputer.
 
 ## Installation
 
@@ -43,7 +43,7 @@ All input parameters are grouped into a clearly-labeled section within the first
 
 -   __saveDirectory__ *(string)*: The folder in which simulation data will be saved, relative to the path of the executable file. 
 
--   __newRun__ *(boolean)*: Tells the program whether to run a new simulation from random initial positions and zero velocity (true) or whether to continue a simulation from previously-saved conditions (false). See Sec. [Continuing a Simulation][#continuning-a-simulation] for more details.
+-   __newRun__ *(boolean)*: Tells the program whether to run a new simulation from random initial positions and zero velocity (true) or whether to continue a simulation from previously-saved conditions (false). See Sec. [Continuing a Simulation][#continuing-a-simulation] for more details.
 
 -   __c0Cont__ *(integer)*: Only used when loading previously-saved conditions (newRun = false). **c0Cont** is a 6-digit integer that corresponds to the number of MD time steps undergone in the loaded simulation, and should match the 6-digit integer found in the previously-saved files (e.g. there is an output file with name ‘ions\_timestepxxxxxx.dat’). c0Cont should be set equal to xxxxxx. See Sec. [Continuing a Simulation][#continuing-a-simulation] for more details.
 
