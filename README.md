@@ -122,7 +122,7 @@ Each file below is saved within each job folder:
 -  **simParams_timestepxxxxxx.dat**: Tab-delimited file that contains all simulation input parameters used for this simulation. The first column of this file contains variable names and the second column contains the corresponding value used in the program with the same units.
     
     
-## Continuning a Simulation
+## Continuing a Simulation
 
 Due to the MDQT code being computationally expensive, you may run into a situation where the simulation will need to run longer than the time you’re allotted in a single session. For example, some clusters may only allow you to run a simulation for 8 hours at a time, but in order to reach the desired **tmax** it will take 10 hours. At the end of a simulation we record the ion positions, velocities, and wavefunctions. The code has the ability to continue a simulation by loading these previously-saved conditions.
 
