@@ -49,7 +49,7 @@ All input parameters are grouped into a clearly-labeled section within the first
 -  __tmax__ *(double)*: Time at which the simulation will end in units of 
 _&omega;<sup>-1</sup><sub>pE</sub> = (3)<sup>&frac12;</sup> &omega;<sup>-1</sup><sub>pi</sub>_ ,
 where  _&omega;<sup>-1</sup><sub>pi</sub> = [n e<sup>2</sup>/(&epsilon;<sub>0</sub> m)]<sup>&frac12;</sup>_
-is the plasma oscillation frequency. A new simulation will run from *t = 0 &rightarrow; tmax*. A continued simulation, which starts at time *t'* (loaded from the save files), will run from *t = t' &rightarrow; tmax*.
+is the plasma oscillation frequency. A new simulation will run from *t = 0 &rightarrow; tmax*. A continued simulation, which starts at time *t'* (loaded from the save files), will run from *t = t' &rightarrow;  tmax*.
 
 -  __density__ *(double)*: Uniform, time-independent plasma density in units of *10<sup>14</sup>  m<sup>-3</sup>*.
 
@@ -79,20 +79,19 @@ _&gamma; = 1.41&times;10<sup>8</sup> s<sup>-1</sup>_ is the natural linewidth of
 
 -  __removeQuantumJump__ *(boolean)*: Program option that allows the user to turn off the QT algorithm completely (true) or use it as normal (false). This is useful for simulating natural plasma evolution. This could also be done by setting *Om = OmDP = 0*, but turning it off altogether makes the code run faster.
 
--  __fracOfSig__ *(double)*: Dimensionless parameter between 0 and 1 used for simulating laser cooling of plasmas in a moving frame, in some ways mimicking laser cooling of an expanding plasma. Although this does not account for the changes in $n$ and *T<sub>e</sub>* as a result of plasma expansion, it does provide information about how the cooling efficacy is affected by a plasma with a non-zero mean velocity, which Doppler-shifts ions with respect to the cooling/repump lasers. When *fracOfSig &gt 0*, we Doppler-shift the cooling/repump lasers by the expected expansion velocity for a plasma of size **sig0** at a distance *fracOfSig &times; sig0* from the plasma’s center.
+-  __fracOfSig__ *(double)*: Dimensionless parameter between 0 and 1 used for simulating laser cooling of plasmas in a moving frame, in some ways mimicking laser cooling of an expanding plasma. Although this does not account for the changes in $n$ and *T<sub>e</sub>* as a result of plasma expansion, it does provide information about how the cooling efficacy is affected by a plasma with a non-zero mean velocity, which Doppler-shifts ions with respect to the cooling/repump lasers. When *fracOfSig &gt; 0*, we Doppler-shift the cooling/repump lasers by the expected expansion velocity for a plasma of size **sig0** at a distance **fracOfSig** &times; **sig0** from the plasma’s center.
 
-- __sig0__ *(double)*: Initial RMS plasma radius in units of mm. This is only used if *fracOfSig &neq& 0*. Note that **sig0** does not represent the actual size of the plasma in the simulation, which is alway uniformly-distributed. **sig0** is only used to determine the hypothetical hydrodynamic expansion velocity of a plasma with initial size **sig0**.
+- __sig0__ *(double)*: Initial RMS plasma radius in units of mm. This is only used if *fracOfSig &ne& 0*. Note that **sig0** does not represent the actual size of the plasma in the simulation, which is alway uniformly-distributed. **sig0** is only used to determine the hypothetical hydrodynamic expansion velocity of a plasma with initial size **sig0**.
 
 -   Time steps
 
     -   __QUANTUMTIMESTEP__ *(double)*: Time step for QT algorithm in units of _&omega;<sup>-1</sup><sub>pE</sub>_.
 
-    -   __DIHTIMESTEP__ *(double)*: Time step for MD algorithm in units of _&omega;<sup>-1</sup><sub>pE</sub>_ that is used from *t = 0 &rightarrow; tmaxDIH* (see below).
+    -   __DIHTIMESTEP__ *(double)*: Time step for MD algorithm in units of _&omega;<sup>-1</sup><sub>pE</sub>_ that is used from *t = 0* &rightarrow; **tmaxDIH** (see below).
 
-    -   __TIMESTEP__ (double): Time step for MD algorithm in units of  _&omega;<sup>-1</sup><sub>pE</sub>_ used from *t =  tmaxDIH &rightarrow; tmax*.
+    -   __TIMESTEP__ (double): Time step for MD algorithm in units of  _&omega;<sup>-1</sup><sub>pE</sub>_ used from *t = * **tmaxDIH** &rightarrow; **tmax**.
 
-    -   Note that the quantum timestep 
-    -  __tmaxDIH__ *(double)*: Time in units of  _&omega;<sup>-1</sup><sub>pE</sub>_ at which we switch from using **DIHTIMESTEP** to **TIMESTEP**. If a single MD time step is desired, either set *DIHTIMESTEP = TIMESTEP* or set *tmaxDIH = 0*.
+    -  __tmaxDIH__ *(double)*: Time in units of  _&omega;<sup>-1</sup><sub>pE</sub>_ at which we switch from using **DIHTIMESTEP** to **TIMESTEP**. If a single MD time step is desired, either set **DIHTIMESTEP** = **TIMESTEP** or set **tmaxDIH** = 0.
 
 ## Continuning a Simulation
 
