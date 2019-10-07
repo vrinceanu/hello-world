@@ -51,9 +51,48 @@ _&omega;<sup>-1</sup><sub>pE</sub> = (3)<sup>&frac12;</sup> &omega;<sup>-1</sup>
 where  _&omega;<sup>-1</sup><sub>pi</sub> = [n e<sup>2</sup>/(&epsilon;<sub>0</sub> m)]<sup>&frac12;</sup>_
 is the plasma oscillation frequency. A new simulation will run from *t = 0 &rightarrow; tmax*. A continued simulation, which starts at time *t'* (loaded from the save files), will run from *t = t' &rightarrow; tmax*.
 
--   density (double): Uniform, time-independent plasma density in units of *10<sup>14</sup>  m<sup>-3</sup>*.
+-  __density__ *(double)*: Uniform, time-independent plasma density in units of *10<sup>14</sup>  m<sup>-3</sup>*.
 
+-  __Ge__ *(double)*: Electron Coulomb coupling parameter. We’ve chosen to define **density** and **Ge** as input parameters, so that the electron temperature, *T<sub>e</sub>*, is self-consistently defined later in the code according to
+_Ge = e<sup>2</sup>/(4&pi;&epsilon;<sub>0</sub> k<sub>B</sub> T<sub>e</sub>)_, where
+_a<sub>ws</sub> = (3/4&pi; n)<sup>&frac13;</sup>_
+is the Wigner-Seitz radius. Typically, **Ge** &lt; 0.1 to avoid three-body recombination.
 
+-  __N0__ *(integer)*: Average number of particles within the simulation box. Note that the actual number of particles used within the simulation box is determined stochastically, and may differ slightly from **N0**. The actual particle number is contained within the variable _N_, which is saved at the end of the simulation
+(see Sec. [Output Files](#output-files)).
+
+-  __detuning__ *(double)*: Detuning of the 408 nm cooling laser, in units of &gamma;, that drives the *<sup>2</sup>S<sub>1/2</sub> &rightarrow; <sup>2</sup>P<sub>3/2</sub>* transition 
+_&gamma; = 1.41&times;10<sup>8</sup> s<sup>-1</sup>_ is the natural linewidth of the cooling transition.
+
+-  __detuningDP__ *(double)*: Detuning of the 1033 nm repump laser, in units of &gamma;, that drives the *<sup>2</sup>D<sub>5/2</sub> &rightarrow; <sup>2</sup>P<sub>3/2</sub>*  transition.
+
+-  __Om__ *(double)*: Rabi frequency of the 408 nm cooling laser in units &gamma;.
+
+-  __OmDP__ *(double)*: Rabi frequency of the 1033 nm cooling laser in units &gamma;
+
+-  __reNormalizewvFns__ *(boolean)*: Program option that allows for forced renormalization of particle wavefunctions such that the total probability of each particle occupying a quantum state is one. This option is only used if necessary as a diagnostic tool while editing the QT code. This is set to false when running simulations with the working code.
+
+-  __applyForce__ *(boolean)*: Program option that allows the user to turn off the inter-ion interactions (false) or simulate ions that interact via the Yukawa potential (true). This can be used to simulate laser cooling of a collisionless plasma, as was done to obtain the *n=0* data in Fig. 6 of reference [[2]](#references).
+
+-  __vRange__ *(double)*: Only used if __applyForce__ = false. In this case, ion velocities are initialized between 
+*[-vRange, vRange]* in units of *m/s*. In the absence of inter-ion interactions, it’s useful to be able to initialize the plasma with a sufficiently wide thermal distribution. We’re often interested in the ion state populations as a function of velocity. In the case that the Yukawa force is applied, the ions begin with zero velocity and subsequently gain kinetic energy as a result of disorder-induced heating. In this way, particles naturally span a velocity range that’s useful for state population studies. With no inter-ion forces, however, the particle velocities remain relatively small because they only change due to the cooling/repump lasers. Thus, we must initialize the ions with velocities that span the range of interest.
+
+-  __removeQuantumJump__ *(boolean)*: Program option that allows the user to turn off the QT algorithm completely (true) or use it as normal (false). This is useful for simulating natural plasma evolution. This could also be done by setting *Om = OmDP = 0*, but turning it off altogether makes the code run faster.
+
+-  __fracOfSig__ *(double)*: Dimensionless parameter between 0 and 1 used for simulating laser cooling of plasmas in a moving frame, in some ways mimicking laser cooling of an expanding plasma. Although this does not account for the changes in $n$ and *T<sub>e</sub>* as a result of plasma expansion, it does provide information about how the cooling efficacy is affected by a plasma with a non-zero mean velocity, which Doppler-shifts ions with respect to the cooling/repump lasers. When *fracOfSig &gt 0*, we Doppler-shift the cooling/repump lasers by the expected expansion velocity for a plasma of size **sig0** at a distance *fracOfSig &times; sig0* from the plasma’s center.
+
+- __sig0__ *(double)*: Initial RMS plasma radius in units of mm. This is only used if *fracOfSig &neq& 0*. Note that **sig0** does not represent the actual size of the plasma in the simulation, which is alway uniformly-distributed. **sig0** is only used to determine the hypothetical hydrodynamic expansion velocity of a plasma with initial size **sig0**.
+
+-   Time steps
+
+    -   __QUANTUMTIMESTEP__ *(double)*: Time step for QT algorithm in units of _&omega;<sup>-1</sup><sub>pE</sub>_.
+
+    -   __DIHTIMESTEP__ *(double)*: Time step for MD algorithm in units of _&omega;<sup>-1</sup><sub>pE</sub>_ that is used from *t = 0 &rightarrow; tmaxDIH* (see below).
+
+    -   __TIMESTEP__ (double): Time step for MD algorithm in units of  _&omega;<sup>-1</sup><sub>pE</sub>_ used from *t =  tmaxDIH &rightarrow; tmax*.
+
+    -   Note that the quantum timestep 
+    -  __tmaxDIH__ *(double)*: Time in units of  _&omega;<sup>-1</sup><sub>pE</sub>_ at which we switch from using **DIHTIMESTEP** to **TIMESTEP**. If a single MD time step is desired, either set *DIHTIMESTEP = TIMESTEP* or set *tmaxDIH = 0*.
 
 ## Continuning a Simulation
 
