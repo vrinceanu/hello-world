@@ -33,7 +33,6 @@ The executable *runFile* accepts an integer 'job number' argument (1 in the abov
 
 The analysis of MDQT results is facilitated by the MATLAB analysis scripts collected in the **Plasma-MDQT-Analysis** folder. These scripts can be used to reproduce simuation data found within [[1]](#references). 
 
-
 To run the program, open ‘mainSimAnalysis.m’ in MATLAB and ensure that the folder containing the scipts is added to the MATLAB search path, which may be done by modifying the ‘addpath’ command on line 7. Once that’s done, press ‘Run’ and the program will allow the user to select one or more simulation folders via a dialogue box. MATLAB will then prompt the user to select which program options to use via the command window.
 
 
@@ -46,6 +45,14 @@ All input parameters are grouped into a clearly-labeled section within the first
 -   __newRun__ *(boolean)*: Tells the program whether to run a new simulation from random initial positions and zero velocity (true) or whether to continue a simulation from previously-saved conditions (false). See Sec. [Continuing a Simulation](#continuing-a-simulation) for more details.
 
 -   __c0Cont__ *(integer)*: Only used when loading previously-saved conditions (newRun = false). **c0Cont** is a 6-digit integer that corresponds to the number of MD time steps undergone in the loaded simulation, and should match the 6-digit integer found in the previously-saved files (e.g. there is an output file with name ‘ions\_timestepxxxxxx.dat’). c0Cont should be set equal to xxxxxx. See Sec. [Continuing a Simulation](#continuing-a-simulation) for more details.
+
+-  __tmax__ *(double)*: Time at which the simulation will end in units of 
+_&omega;<sup>-1</sup><sub>pE</sub> = (3)<sup>&frac12;</sup> &omega;<sup>-1</sup><sub>pi</sub>_ ,
+where  _&omega;<sup>-1</sup><sub>pi</sub> = [n e<sup>2</sup>/(&epsilon;<sub>0</sub> m)]<sup>&frac12;</sup>_
+is the plasma oscillation frequency. A new simulation will run from *t = 0 &rightarrow; tmax*. A continued simulation, which starts at time *t'* (loaded from the save files), will run from *t = t' &rightarrow; tmax*.
+
+-   density (double): Uniform, time-independent plasma density in units of *10<sup>14</sup>  m<sup>-3</sup>*.
+
 
 
 ## Continuning a Simulation
